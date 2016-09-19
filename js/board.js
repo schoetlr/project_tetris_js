@@ -30,24 +30,60 @@ var Board = (function(){
         
   }
 
-  var moveHorizontal = function(direction){
-    var block = blocks[0];
-    
-    if(block.left() > 0 && block.right() < 9){
-      
-      block.coords.forEach(function(coord){
-        var newCol = coord[1] + direction;
-        coord[1] = newCol;
+  var leftClear = function(block){
+    //check that no blocks intersect with the coords of the passed block -1 to 
+    //the the col
+    var oneOver = [];
+    block.coords.forEach(function(coord){
+      var col = coord[1] - 1;
+      oneOver.push([coord[0], col]);
+    })
+
+    var clear = true;
+    oneOver.forEach(function(oneOverCoord){
+      blocks.forEach(function(boardBlock){
+        boardBlock.coords.forEach(function(coord){
+          if(oneOverCoord[0] === coord[0] && oneOverCoord[1] === coord[1]){
+            clear = false;
+          }
+        })
       })
 
-    }
-    
-  }
+    })
+
+    return clear;
+      
+  }//end left clear
+
+  var rightClear = function(block){
+    var oneOver = [];
+    block.coords.forEach(function(coord){
+      var col = coord[1] + 1;
+      oneOver.push([coord[0], col]);
+    })
+
+    var clear = true;
+    oneOver.forEach(function(oneOverCoord){
+      blocks.forEach(function(boardBlock){
+        boardBlock.coords.forEach(function(coord){
+          if(oneOverCoord[0] === coord[0] && oneOverCoord[1] === coord[1]){
+            clear = false;
+          }
+        })
+      })
+
+    })
+
+    return clear;
+
+
+  }//end right clear
+
 
   var moveRight = function(){
     var block = blocks[0];
     
-    if(block.right() < 9){
+    if(block.right() < 9 && rightClear(block)){
       
       block.coords.forEach(function(coord){
         var newCol = coord[1] + 1;
@@ -60,7 +96,7 @@ var Board = (function(){
   var moveLeft = function(){
     var block = blocks[0];
     
-    if(block.left() > 0){
+    if(block.left() > 0 && leftClear(block)){
       
       block.coords.forEach(function(coord){
         var newCol = coord[1] - 1;
