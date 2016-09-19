@@ -1,21 +1,25 @@
 var Block = (function(){
 
-  function square(){
+  var createSquare = function(){
 
-  };
+  }
 
-  function bar(){
+  var createBar = function(){
 
-  };
+  }
 
-  function lShape(){
+  var createLShape = function(){
 
-  };
+  }
 
-  function sShape(){
+  var createSShape = function(){
 
-  };
+  }
 
+  function block() {
+    //stores an array of coords it occupies
+    //has a move down method
+  }
 
 
   return {
