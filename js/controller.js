@@ -19,11 +19,14 @@ var Controller = (function(Block, Board, View){
 
   var handleInput = function(event){
     //move piece left/right
-
+    console.log(event.which);
     if(event.which === 37){
       Board.moveLeft();
     } else if(event.which === 39){
       Board.moveRight();
+    } else if(event.which === 40){
+      
+      Board.dropBlock();
     }
   }
 

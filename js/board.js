@@ -33,6 +33,25 @@ var Board = (function(){
         
   }
 
+  var dropBlock = function(){
+    
+    var block = blocks[0];
+    checkStatus(block);
+    while(block.moving === true){
+
+      checkStatus(block);
+      if(block.moving === false){
+        break;
+      }
+      block.coords.forEach(function(coord){
+        var row = coord[0];
+        var newRow = row + 1;
+        coord[0] = newRow;
+      })
+    }
+
+  }
+
   var leftClear = function(block){
     //check that no blocks intersect with the coords of the passed block -1 to 
     //the the col
@@ -266,7 +285,8 @@ var Board = (function(){
     moveRight: moveRight,
 
     handleScoring: handleScoring,
-    score: function(){return score;}
+    score: function(){return score;},
+    dropBlock: dropBlock
 
 
   }
