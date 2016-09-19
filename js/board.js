@@ -1,5 +1,6 @@
 var Board = (function(){
 
+  var score = 0;
   var blocks = [];
   //unshift blocks onto the board so can be easily indexed for the moving piece
 
@@ -7,6 +8,8 @@ var Board = (function(){
 
   var height = 24;
   //top four rows are hidden for spawning blocks
+
+  var rows = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
 
   var empty = function(){
     return blocks.length === 0;
@@ -39,8 +42,16 @@ var Board = (function(){
       oneOver.push([coord[0], col]);
     })
 
+    var leftSide = [];
+    var farthestLeft = oneOver[0][0];
+    oneOver.forEach(function(coord){
+      if(coord[0] < farthestLeft){
+        leftSide.push(coord);
+      }
+    })
+
     var clear = true;
-    oneOver.forEach(function(oneOverCoord){
+    leftSide.forEach(function(oneOverCoord){
       blocks.forEach(function(boardBlock){
         boardBlock.coords.forEach(function(coord){
           if(oneOverCoord[0] === coord[0] && oneOverCoord[1] === coord[1]){
@@ -61,9 +72,16 @@ var Board = (function(){
       var col = coord[1] + 1;
       oneOver.push([coord[0], col]);
     })
+    var rightSide = [];
+    var farthestRight = oneOver[0][1];
+    oneOver.forEach(function(coord){
+      if(coord[1] > farthestRight){
+        rightSide.push(coord);
+      }
+    })
 
     var clear = true;
-    oneOver.forEach(function(oneOverCoord){
+    rightSide.forEach(function(oneOverCoord){
       blocks.forEach(function(boardBlock){
         boardBlock.coords.forEach(function(coord){
           if(oneOverCoord[0] === coord[0] && oneOverCoord[1] === coord[1]){
@@ -83,6 +101,7 @@ var Board = (function(){
   var moveRight = function(){
     var block = blocks[0];
     
+
     if(block.right() < 9 && rightClear(block)){
       
       block.coords.forEach(function(coord){
@@ -104,6 +123,73 @@ var Board = (function(){
       })
 
     }
+  }
+
+  var wipeFullRows = function(){
+
+    var fullRows = [];
+    var xRows = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    blocks.forEach(function(block){
+      block.coords.forEach(function(coord){
+        var rowIndex = coord[0];
+        // console.log(rows);
+        // rows[rowIndex].push(coord);
+        xRows[rowIndex] += 1;
+      })
+    })
+    
+    // rows.forEach(function(row, index){
+    //   if(row.length === 10){
+    //     fullRows.push(index);
+    //   }
+    // })
+    xRows.forEach(function(count, index){
+      if(count === 10){
+        fullRows.push(index);
+      }
+    })
+    
+
+    //indexes of rows to wipe
+    //get rid of coords that match row of full row
+    fullRows.forEach(function(fullIndex){
+      score += 1;
+      blocks.forEach(function(block){
+        removeIndices = [];
+        
+        block.coords.forEach(function(coord, removeIndex){
+          if(fullIndex === coord[0]){
+            removeIndices.push(removeIndex);
+          }
+        })
+
+        //sort the removeIndices from biggest to smallest so as to not change 
+        //any index while splicing
+        removeIndices = removeIndices.sort(function(a,b){return b - a;});
+
+        //remove the coords in remove Index from block
+        removeIndices.forEach(function(index){
+          block.coords.splice(index,1);
+        })
+      })
+    })
+
+  }//end wipeFullRows
+
+  var slideDown = function(){
+    //if the coordinate directly before it does not exist then slide down
+
+    //collect the coordinates with a freespace below, and then shift allthose 
+    //coords down by one
+
+    //use a do while maybe to set a flag for whether or not you just slide any 
+    //elements
+    
+  }
+
+  var handleScoring = function(){
+    wipeFullRows();
+    slideDown();
   }
 
   var checkStatus = function(block){
@@ -159,7 +245,10 @@ var Board = (function(){
     moveBlockDown: moveBlockDown,
 
     moveLeft: moveLeft,
-    moveRight: moveRight
+    moveRight: moveRight,
+
+    handleScoring: handleScoring,
+    score: score
 
 
   }
