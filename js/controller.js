@@ -15,8 +15,13 @@ var Controller = (function(Block, Board, View){
     View.render(Board.blocks);
   }
 
-  var handleInput = function(){
-
+  var handleInput = function(event){
+    //move piece left/right
+    if(event.which === 37){
+      Board.moveLeft();
+    } else if(event.which === 39){
+      Board.moveRight();
+    }
   }
 
   return {

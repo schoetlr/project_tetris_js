@@ -65,7 +65,28 @@ var Block = (function(Board){
       })
 
       return last;
-    }//end lastRow
+    }//end lastRowCoords
+
+    this.left = function(){
+      var left = this.coords[0][1];
+      this.coords.forEach(function(coord){
+        if(coord[1] < left){
+          left = coord[1];
+        }
+      })
+      return left;
+    }
+
+    this.right = function(){
+      var right = this.coords[0][1];
+      this.coords.forEach(function(coord){
+        if(coord[1] > right){
+          right = coord[1];
+        }
+      })
+
+      return right;
+    }
     
   }
 

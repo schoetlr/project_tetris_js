@@ -28,9 +28,46 @@ var Board = (function(){
       })
     }
         
+  }
 
+  var moveHorizontal = function(direction){
+    var block = blocks[0];
     
+    if(block.left() > 0 && block.right() < 9){
+      
+      block.coords.forEach(function(coord){
+        var newCol = coord[1] + direction;
+        coord[1] = newCol;
+      })
+
+    }
     
+  }
+
+  var moveRight = function(){
+    var block = blocks[0];
+    
+    if(block.right() < 9){
+      
+      block.coords.forEach(function(coord){
+        var newCol = coord[1] + 1;
+        coord[1] = newCol;
+      })
+
+    }
+  }
+
+  var moveLeft = function(){
+    var block = blocks[0];
+    
+    if(block.left() > 0){
+      
+      block.coords.forEach(function(coord){
+        var newCol = coord[1] - 1;
+        coord[1] = newCol;
+      })
+
+    }
   }
 
   var checkStatus = function(block){
@@ -74,7 +111,7 @@ var Board = (function(){
     }
     
 
-  }
+  }//end check status
 
   return {
     blocks: blocks,
@@ -83,7 +120,10 @@ var Board = (function(){
 
     noneMoving: noneMoving,
 
-    moveBlockDown: moveBlockDown
+    moveBlockDown: moveBlockDown,
+
+    moveLeft: moveLeft,
+    moveRight: moveRight
 
 
   }

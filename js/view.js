@@ -15,7 +15,9 @@ var View = (function(){
 
     //set keyboard events
     $(document).keyup(function(event){
+      
       _handleInput(event);
+
     });
   }
 
