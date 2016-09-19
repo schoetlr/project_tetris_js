@@ -1,0 +1,24 @@
+#tetris {
+  height: 600px;
+  width: 300px;
+  border: solid 2px black;
+  margin-left: 300px;
+  background-color: lightgreen;
+}
+
+
+.row {
+  height: 5%;
+  width: 100%;
+}
+
+.col {
+  width: 10%;
+  height: 100%;
+  display: inline-block;
+}
+
+
+.block {
+  background-color: red;
+}
