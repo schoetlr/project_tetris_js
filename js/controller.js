@@ -12,8 +12,9 @@ var Controller = (function(Block, Board, View){
     } else {
       Board.moveBlockDown();
     }
+    //handles full rows
     Board.handleScoring();
-    View.render(Board.blocks);
+    View.render(Board.blocks, Board.score());
   }
 
   var handleInput = function(event){

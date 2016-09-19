@@ -21,9 +21,10 @@ var View = (function(){
     });
   }
 
-  var render = function(blocks){
+  var render = function(blocks, score){
     $(".col").removeClass("block");
     drawBlocks(blocks);
+    $("#score").text("Score: " + score);
   }
 
   var drawBlocks = function(blocks){

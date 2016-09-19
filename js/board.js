@@ -157,6 +157,7 @@ var Board = (function(){
     //get rid of coords that match row of full row
     fullRows.forEach(function(fullIndex){
       score += 1;
+      console.log(score);
       blocks.forEach(function(block){
         removeIndices = [];
         
@@ -265,7 +266,7 @@ var Board = (function(){
     moveRight: moveRight,
 
     handleScoring: handleScoring,
-    score: score
+    score: function(){return score;}
 
 
   }
