@@ -9,7 +9,7 @@ var Board = (function(){
   var height = 24;
   //top four rows are hidden for spawning blocks
 
-  var rows = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+  
 
   var empty = function(){
     return blocks.length === 0;
@@ -148,7 +148,10 @@ var Board = (function(){
         fullRows.push(index);
       }
     })
-    
+
+
+    fullRows.sort();
+    //SORT FULL ROWS FROM SMALLEST TO LARGEST
 
     //indexes of rows to wipe
     //get rid of coords that match row of full row
@@ -172,7 +175,21 @@ var Board = (function(){
           block.coords.splice(index,1);
         })
       })
-    })
+
+      //go through each coords and if its row is less than the fullIndex
+      //and add 1 to the row
+      blocks.forEach(function(block){
+        block.coords.forEach(function(coord){
+          if(coord[0] < fullIndex){
+            //add one to its row
+            var newRow = coord[0] + 1;
+            coord[0] = newRow;
+          }
+        })
+      })
+
+
+    })//end fullRows iteration
 
   }//end wipeFullRows
 
